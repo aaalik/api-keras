@@ -1,0 +1,16 @@
+version: '3.4'
+services:
+  dev:
+    network_mode: bridge
+    image: api-keras
+    ports: 
+      - 3333:3333
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /main
+    volumes:
+      - .:/go/src/github.com/aaalik/api-keras
+    working_dir: /go/src/github.com/aaalik/api-keras
+    env_file:
+      - .env

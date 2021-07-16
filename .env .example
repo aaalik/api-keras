@@ -1,0 +1,9 @@
+DATABASE_USER=xxxxxxxx
+DATABASE_PASSWORD=xxxxxxx
+DATABASE_HOST=localhost
+DATABASE_NAME=xxxxxxxx
+
+SECRET_KEY=xxxxxxxxxxxxxx
+REFRESH_SECRET_KEY=xxxxxxxxxxxxxxx
+
+SERVER_PORT=3333
