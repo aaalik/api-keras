@@ -27,6 +27,7 @@ func SetupRouter() {
 	s.HandleFunc("/{id}", v1Item.DeleteItem).Methods("DELETE")
 	s.HandleFunc("", v1Item.AddItem).Methods("POST")
 	s.HandleFunc("", v1Item.GetItems).Methods("GET")
+	s.Use(jwtMiddleware.Handler)
 
 	// user router
 	s = r.PathPrefix("/v1/users").Subrouter()
@@ -35,7 +36,6 @@ func SetupRouter() {
 	s.HandleFunc("/{id}", v1User.DeleteUser).Methods("DELETE")
 	s.HandleFunc("", v1User.AddUser).Methods("POST")
 	s.HandleFunc("", v1User.GetUsers).Methods("GET")
-
 	s.Use(jwtMiddleware.Handler)
 
 	helper.Log.Info("Server started at port " + os.Getenv("SERVER_PORT"))

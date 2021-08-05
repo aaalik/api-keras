@@ -6,6 +6,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/aaalik/api-keras/helper"
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	jwtf3t "github.com/form3tech-oss/jwt-go"
@@ -35,6 +36,7 @@ func CreateToken(userid int64) (*TokenDetails, error) {
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
 	td.AccessToken, err = at.SignedString([]byte(os.Getenv("SECRET_KEY")))
 	if err != nil {
+		helper.Log.Error(err)
 		return nil, err
 	}
 
@@ -45,6 +47,7 @@ func CreateToken(userid int64) (*TokenDetails, error) {
 	rt := jwt.NewWithClaims(jwt.SigningMethodHS256, rtClaims)
 	td.RefreshToken, err = rt.SignedString([]byte(os.Getenv("REFRESH_SECRET_KEY")))
 	if err != nil {
+		helper.Log.Error(err)
 		return nil, err
 	}
 	return td, nil
@@ -66,10 +69,12 @@ func VerifyToken(bearToken string) error {
 	})
 
 	if err != nil {
+		helper.Log.Error(err)
 		return err
 	}
 
 	if _, ok := token.Claims.(jwt.Claims); !ok || !token.Valid {
+		helper.Log.Error(err)
 		return err
 	}
 
